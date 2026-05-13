@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Patriarch — The Future of Human Longevity</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+/* =========================
+   ROOT VARIABLES
+========================= */
+:root{
+    --bg:#050505;
+    --bg-secondary:#0b0d10;
+    --surface:rgba(255,255,255,0.05);
+    --surface-strong:rgba(255,255,255,0.08);
+
+    --border:rgba(255,255,255,0.12);
+
+    --text:#f5f7fa;
+    --text-muted:#9ea6b2;
+
+    --silver:#d9dde3;
+    --platinum:#f1f2f4;
+    --cyan:#55e7ff;
+    --blue:#5d8cff;
+    --gold:#bfa76a;
+    --emerald:#3fd0a8;
+
+    --glow:0 0 40px rgba(85,231,255,.25);
+
+    --radius:22px;
+
+    --transition:all .45s cubic-bezier(.2,.8,.2,1);
+
+    --max-width:1400px;
+}
+
+/* =========================
+   RESET
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at top left, rgba(85,231,255,.08), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(93,140,255,.08), transparent 30%),
+        linear-gradient(to bottom, #030303, #07090c 40%, #040404);
+    color:var(--text);
+    font-family:Inter, system-ui, sans-serif;
+    overflow-x:hidden;
+    line-height:1.6;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#050505;
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(var(--cyan), var(--blue));
+    border-radius:50px;
+}
+
+/* =========================
+   LOADER
+========================= */
+.loader{
+    position:fixed;
+    inset:0;
+    background:#030303;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:opacity .8s ease, visibility .8s ease;
+}
+
+.loader.hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-ring{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.08);
+    border-top:1px solid var(--cyan);
+    animation:spin 1.2s linear infinite;
+    position:relative;
+}
+
+.loader-ring::before{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.05);
+    border-bottom:1px solid var(--gold);
+    animation:spinReverse 1.6s linear infinite;
+}
+
+.loader-text{
+    margin-top:24px;
+    letter-spacing:8px;
+    color:var(--silver);
+    font-size:.9rem;
+    text-transform:uppercase;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+@keyframes spinReverse{
+    to{transform:rotate(-360deg);}
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+.progress-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    height:3px;
+    width:0%;
+    background:linear-gradient(to right, var(--cyan), var(--blue), var(--emerald));
+    z-index:9999;
+    box-shadow:0 0 20px rgba(85,231,255,.6);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(92%, 1350px);
+    z-index:999;
+    padding:16px 28px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(10,10,12,.55);
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(24px);
+    border-radius:18px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo-mark{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.03));
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:var(--glow);
+}
+
+.logo-mark span{
+    font-weight:800;
+    color:var(--cyan);
+}
+
+.logo-text h1{
+    font-size:1rem;
+    letter-spacing:3px;
+    font-weight:700;
+}
+
+.logo-text p{
+    font-size:.72rem;
+    color:var(--text-muted);
+    letter-spacing:2px;
+}
+
+.nav-links{
+    display:flex;
+    gap:28px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:var(--text-muted);
+    font-size:.95rem;
+    position:relative;
+    transition:var(--transition);
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-8px;
+    width:0%;
+    height:2px;
+    background:linear-gradient(to right, var(--cyan), var(--blue));
+    transition:var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--text);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after{
+    width:100%;
+}
+
+.menu-btn{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+}
+
+.menu-btn span{
+    width:26px;
+    height:2px;
+    background:white;
+}
+
+/* =========================
+   GLOBAL
+========================= */
+section{
+    position:relative;
+    padding:120px 6%;
+}
+
+.container{
+    width:100%;
+    max-width:var(--max-width);
+    margin:auto;
+}
+
+.section-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+    padding:10px 18px;
+    border-radius:999px;
+
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    color:var(--silver);
+}
+
+.section-tag::before{
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 12px var(--cyan);
+}
+
+.section-title{
+    font-size:clamp(2.4rem, 6vw, 5rem);
+    line-height:1.05;
+    margin-bottom:20px;
+    letter-spacing:-2px;
+}
+
+.section-subtitle{
+    max-width:800px;
+    color:var(--text-muted);
+    font-size:1.05rem;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    align-items:center;
+    gap:60px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero-content h1{
+    font-size:clamp(3.8rem, 9vw, 8rem);
+    line-height:.95;
+    letter-spacing:-5px;
+    margin-bottom:24px;
+}
+
+.hero-content h1 span{
+    background:linear-gradient(to right, var(--platinum), var(--cyan));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero-content p{
+    max-width:720px;
+    color:var(--text-muted);
+    font-size:1.15rem;
+    margin-bottom:38px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:18px 30px;
+    border-radius:18px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    transition:var(--transition);
+    font-weight:600;
+    position:relative;
+    overflow:hidden;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg, rgba(85,231,255,.16), rgba(93,140,255,.16));
+    color:white;
+    border:1px solid rgba(85,231,255,.35);
+    box-shadow:0 0 30px rgba(85,231,255,.15);
+}
+
+.btn-primary:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 45px rgba(85,231,255,.35);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.04);
+    color:white;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,.08);
+    transform:translateY(-4px);
+}
+
+.hero-visual{
+    position:relative;
+    height:700px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(10px);
+    animation:float 8s ease-in-out infinite;
+}
+
+.orb.one{
+    width:300px;
+    height:300px;
+    background:rgba(85,231,255,.16);
+}
+
+.orb.two{
+    width:180px;
+    height:180px;
+    background:rgba(93,140,255,.14);
+    transform:translate(140px,-120px);
+    animation-delay:2s;
+}
+
+.orb.three{
+    width:120px;
+    height:120px;
+    background:rgba(191,167,106,.12);
+    transform:translate(-140px,150px);
+    animation-delay:3s;
+}
+
+.bio-core{
+    width:420px;
+    height:420px;
+    border-radius:40px;
+
+    background:
+        linear-gradient(145deg,
+        rgba(255,255,255,.08),
+        rgba(255,255,255,.03));
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(24px);
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 0 80px rgba(85,231,255,.08),
+        inset 0 0 40px rgba(255,255,255,.03);
+}
+
+.bio-core::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:conic-gradient(
+        from 90deg,
+        transparent,
+        rgba(85,231,255,.2),
+        transparent,
+        rgba(93,140,255,.18),
+        transparent
+    );
+    animation:rotate 12s linear infinite;
+}
+
+.bio-core::after{
+    content:"PATRIARCH";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    letter-spacing:10px;
+    font-size:2rem;
+    font-weight:800;
+    color:rgba(255,255,255,.92);
+}
+
+@keyframes rotate{
+    to{transform:rotate(360deg);}
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-18px);}
+}
+
+/* =========================
+   GLASS CARDS
+========================= */
+.grid{
+    display:grid;
+    gap:26px;
+}
+
+.cards-3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:var(--radius);
+    padding:32px;
+    position:relative;
+    overflow:hidden;
+    transition:var(--transition);
+    backdrop-filter:blur(20px);
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.04),
+        transparent
+    );
+    transform:translateX(-120%);
+    transition:1s;
+}
+
+.card:hover::before{
+    transform:translateX(120%);
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    border-color:rgba(85,231,255,.25);
+    box-shadow:0 0 40px rgba(85,231,255,.12);
+}
+
+.card h3{
+    margin-bottom:14px;
+    font-size:1.4rem;
+}
+
+.card p{
+    color:var(--text-muted);
+}
+
+.card-icon{
+    width:62px;
+    height:62px;
+    border-radius:18px;
+    margin-bottom:24px;
+    display:grid;
+    place-items:center;
+    background:rgba(85,231,255,.08);
+    border:1px solid rgba(85,231,255,.15);
+    font-size:1.4rem;
+    color:var(--cyan);
+}
+
+/* =========================
+   TIMELINE
+========================= */
+.timeline{
+    margin-top:70px;
+    display:grid;
+    gap:22px;
+}
+
+.timeline-item{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:30px;
+    align-items:center;
+    padding:30px;
+    border-radius:22px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.timeline-year{
+    font-size:2rem;
+    color:var(--cyan);
+    font-weight:700;
+}
+
+/* =========================
+   IMPACT
+========================= */
+.stats{
+    margin-top:60px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+}
+
+.stat{
+    text-align:center;
+    padding:34px;
+    border-radius:22px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.stat h2{
+    font-size:3rem;
+    margin-bottom:10px;
+    background:linear-gradient(to right, var(--cyan), var(--platinum));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.stat p{
+    color:var(--text-muted);
+}
+
+.world-panel{
+    margin-top:60px;
+    height:420px;
+    border-radius:30px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid rgba(255,255,255,.08);
+    background:
+        radial-gradient(circle at center, rgba(85,231,255,.12), transparent 40%),
+        linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+}
+
+.world-grid{
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size:50px 50px;
+}
+
+.pulse{
+    position:absolute;
+    width:14px;
+    height:14px;
+    background:var(--cyan);
+    border-radius:50%;
+    box-shadow:0 0 20px var(--cyan);
+    animation:pulse 2s infinite;
+}
+
+.pulse::after{
+    content:"";
+    position:absolute;
+    inset:-14px;
+    border-radius:50%;
+    border:1px solid rgba(85,231,255,.4);
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.35);}
+    100%{transform:scale(1);}
+}
+
+/* =========================
+   LEADERSHIP
+========================= */
+.team{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+    margin-top:60px;
+}
+
+.member{
+    border-radius:28px;
+    overflow:hidden;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    transition:var(--transition);
+}
+
+.member:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 40px rgba(85,231,255,.12);
+}
+
+.member-top{
+    height:260px;
+    background:
+        radial-gradient(circle at top, rgba(85,231,255,.25), transparent 40%),
+        linear-gradient(145deg, #0b0f14, #111821);
+    position:relative;
+}
+
+.member-top::after{
+    content:"";
+    position:absolute;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.member-content{
+    padding:28px;
+}
+
+.member-content p{
+    color:var(--text-muted);
+}
+
+/* =========================
+   MEMBERSHIP
+========================= */
+.membership{
+    text-align:center;
+}
+
+.membership-panel{
+    margin-top:60px;
+    padding:70px 40px;
+    border-radius:40px;
+    background:
+        linear-gradient(145deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.02));
+
+    border:1px solid rgba(255,255,255,.08);
+    position:relative;
+    overflow:hidden;
+}
+
+.membership-panel::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(circle at top right, rgba(85,231,255,.12), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(191,167,106,.08), transparent 25%);
+}
+
+.membership h2{
+    font-size:clamp(2rem,5vw,4rem);
+    margin-bottom:18px;
+}
+
+/* =========================
+   CONTACT
+========================= */
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-top:60px;
+}
+
+.contact-card{
+    padding:40px;
+    border-radius:28px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+form{
+    display:grid;
+    gap:18px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:18px 20px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+    color:white;
+    font-size:1rem;
+    transition:var(--transition);
+}
+
+input:focus,
+textarea:focus{
+    outline:none;
+    border-color:rgba(85,231,255,.4);
+    box-shadow:0 0 20px rgba(85,231,255,.12);
+}
+
+textarea{
+    min-height:160px;
+    resize:vertical;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer{
+    padding:80px 6% 50px;
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+.footer-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.footer-links{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+.footer-links a{
+    color:var(--text-muted);
+    text-decoration:none;
+    transition:var(--transition);
+}
+
+.footer-links a:hover{
+    color:var(--cyan);
+}
+
+/* =========================
+   REVEAL ANIMATIONS
+========================= */
+.reveal{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:1100px){
+
+    .hero-grid,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cards-3,
+    .team,
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .hero{
+        padding-top:140px;
+    }
+
+    .hero-visual{
+        height:500px;
+    }
+
+    .bio-core{
+        width:320px;
+        height:320px;
+    }
+}
+
+@media(max-width:820px){
+
+    .nav-links{
+        position:absolute;
+        top:90px;
+        left:0;
+        right:0;
+        flex-direction:column;
+        background:#0b0d10;
+        padding:30px;
+        border-radius:20px;
+        border:1px solid rgba(255,255,255,.08);
+
+        opacity:0;
+        visibility:hidden;
+        transform:translateY(-10px);
+        transition:var(--transition);
+    }
+
+    .nav-links.active{
+        opacity:1;
+        visibility:visible;
+        transform:translateY(0);
+    }
+
+    .menu-btn{
+        display:flex;
+    }
+
+    .cards-3,
+    .team,
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .timeline-item{
+        grid-template-columns:1fr;
+    }
+
+    .section-title{
+        letter-spacing:-1px;
+    }
+
+    .hero-content h1{
+        letter-spacing:-2px;
+    }
+}
+
+/* =========================
+   FLOATING PARTICLES
+========================= */
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:rgba(255,255,255,.4);
+    animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    10%{
+        opacity:1;
+    }
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div class="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">Initializing Patriarch</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar"></div>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- NAV -->
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-mark">
+            <span>P</span>
+        </div>
+
+        <div class="logo-text">
+            <h1>PATRIARCH</h1>
+            <p>Longevity Institute</p>
+        </div>
+    </div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="#hero" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#technology">Technology</a>
+        <a href="#impact">Impact</a>
+        <a href="#leadership">Leadership</a>
+        <a href="#membership">Access</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div class="menu-btn" id="menuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="container hero-grid">
+
+        <div class="hero-content reveal">
+            <div class="section-tag">
+                Future of Human Longevity
+            </div>
+
+            <h1>
+                Engineering
+                <span>Biological Immortality</span>
+            </h1>
+
+            <p>
+                Patriarch is a confidential biotechnology institution advancing
+                regenerative medicine, neural longevity, AI-assisted drug discovery,
+                genetic repair systems, and next-generation age reversal therapies
+                designed to redefine the limits of human lifespan.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#research" class="btn btn-primary">
+                    Explore Research
+                </a>
+
+                <a href="#membership" class="btn btn-secondary">
+                    Request Access
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual reveal">
+            <div class="orb one"></div>
+            <div class="orb two"></div>
+            <div class="orb three"></div>
+
+            <div class="bio-core"></div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            About Patriarch
+        </div>
+
+        <h2 class="section-title reveal">
+            Reimagining the Human Lifespan
+        </h2>
+
+        <p class="section-subtitle reveal">
+            Patriarch operates at the intersection of biotechnology, regenerative
+            science, AI computation, and precision medicine. Our mission is to
+            eradicate biological aging and eliminate age-related disease through
+            advanced scientific systems engineered for long-term human vitality.
+        </p>
+
+        <div class="grid cards-3" style="margin-top:60px;">
+
+            <div class="card reveal">
+                <div class="card-icon">◈</div>
+                <h3>Cellular Restoration</h3>
+                <p>
+                    Advanced regenerative systems focused on restoring damaged
+                    tissue and reversing cellular degradation.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">◎</div>
+                <h3>Precision Longevity</h3>
+                <p>
+                    Personalized lifespan enhancement protocols powered by AI
+                    biological modeling and genomic analysis.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">✦</div>
+                <h3>Future Medicine</h3>
+                <p>
+                    Developing post-pharmaceutical therapies designed to extend
+                    healthy human life beyond current biological expectations.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Research Divisions
+        </div>
+
+        <h2 class="section-title reveal">
+            The Architecture of Human Longevity
+        </h2>
+
+        <div class="grid cards-3" style="margin-top:60px;">
+
+            <div class="card reveal">
+                <div class="card-icon">🧬</div>
+                <h3>Cellular Regeneration</h3>
+                <p>
+                    Repairing biological deterioration through advanced stem-cell
+                    systems and tissue restoration technologies.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">🧠</div>
+                <h3>Neural Longevity</h3>
+                <p>
+                    Preserving cognitive function and neural performance across
+                    extended human lifespans.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">⚛</div>
+                <h3>Genetic Repair</h3>
+                <p>
+                    Eliminating inherited biological weaknesses using genomic
+                    editing and DNA correction systems.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">◉</div>
+                <h3>Organ Bioengineering</h3>
+                <p>
+                    Developing lab-grown organs and adaptive biological implants
+                    for long-term vitality.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">✧</div>
+                <h3>Disease Suppression</h3>
+                <p>
+                    Building predictive therapies targeting cancer, degeneration,
+                    inflammation, and cellular instability.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <div class="card-icon">AI</div>
+                <h3>AI Drug Discovery</h3>
+                <p>
+                    Using machine intelligence to model molecular pathways and
+                    accelerate breakthrough therapies.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Technologies & Breakthroughs
+        </div>
+
+        <h2 class="section-title reveal">
+            Scientific Systems Beyond Conventional Medicine
+        </h2>
+
+        <div class="timeline">
+
+            <div class="timeline-item reveal">
+                <div class="timeline-year">2032</div>
+
+                <div>
+                    <h3>Quantum Bio-Simulation</h3>
+                    <p>
+                        AI-driven molecular simulations capable of predicting
+                        biological aging pathways decades in advance.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-year">2037</div>
+
+                <div>
+                    <h3>Neural Preservation Matrix</h3>
+                    <p>
+                        Advanced cognitive stabilization systems engineered to
+                        reduce neural degradation over time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-year">2041</div>
+
+                <div>
+                    <h3>Adaptive Cellular Reversal</h3>
+                    <p>
+                        Precision therapies designed to reverse cellular age
+                        signatures and restore biological efficiency.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- DISEASES -->
+<section id="diseases">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Aging Challenges
+        </div>
+
+        <h2 class="section-title reveal">
+            Targeting the Core Drivers of Human Decline
+        </h2>
+
+        <div class="grid cards-3" style="margin-top:60px;">
+
+            <div class="card reveal">
+                <h3>Neurodegeneration</h3>
+                <p>
+                    Combatting progressive neurological decline through neural
+                    repair and advanced cognitive preservation systems.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Cancer Systems</h3>
+                <p>
+                    Precision suppression technologies focused on eliminating
+                    unstable cellular replication pathways.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Organ Failure</h3>
+                <p>
+                    Bioengineered replacement systems extending organ viability
+                    beyond current biological limitations.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Cellular Decay</h3>
+                <p>
+                    Reversing age-linked degradation at the molecular and
+                    mitochondrial level.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Cognitive Decline</h3>
+                <p>
+                    Enhancing long-term cognitive resilience using advanced
+                    neural reinforcement therapies.
+                </p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Inflammatory Aging</h3>
+                <p>
+                    Suppressing chronic inflammation and metabolic instability
+                    associated with biological aging.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Global Impact
+        </div>
+
+        <h2 class="section-title reveal">
+            Building the Infrastructure of Post-Aging Civilization
+        </h2>
+
+        <p class="section-subtitle reveal">
+            Patriarch collaborates with advanced medical laboratories, AI research
+            networks, and bioengineering institutions to accelerate the transition
+            into a healthier, longer-lived human future.
+        </p>
+
+        <div class="stats">
+
+            <div class="stat reveal">
+                <h2 data-target="42">0</h2>
+                <p>Research Facilities</p>
+            </div>
+
+            <div class="stat reveal">
+                <h2 data-target="126">0</h2>
+                <p>Biotech Programs</p>
+            </div>
+
+            <div class="stat reveal">
+                <h2 data-target="18">0</h2>
+                <p>Global Partnerships</p>
+            </div>
+
+            <div class="stat reveal">
+                <h2 data-target="91">0</h2>
+                <p>AI Drug Models</p>
+            </div>
+
+        </div>
+
+        <div class="world-panel reveal">
+            <div class="world-grid"></div>
+
+            <div class="pulse" style="top:28%; left:22%;"></div>
+            <div class="pulse" style="top:42%; left:48%;"></div>
+            <div class="pulse" style="top:35%; left:72%;"></div>
+            <div class="pulse" style="top:68%; left:58%;"></div>
+        </div>
+
+    </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Leadership & Vision
+        </div>
+
+        <h2 class="section-title reveal">
+            Architects of the Longevity Era
+        </h2>
+
+        <div class="team">
+
+            <div class="member reveal">
+                <div class="member-top"></div>
+
+                <div class="member-content">
+                    <h3>Dr. Elias Veyron</h3>
+                    <p>
+                        Director of regenerative systems and adaptive cellular
+                        longevity research.
+                    </p>
+                </div>
+            </div>
+
+            <div class="member reveal">
+                <div class="member-top"></div>
+
+                <div class="member-content">
+                    <h3>Dr. Serena Vale</h3>
+                    <p>
+                        Lead architect of AI-assisted molecular analysis and
+                        genomic reconstruction.
+                    </p>
+                </div>
+            </div>
+
+            <div class="member reveal">
+                <div class="member-top"></div>
+
+                <div class="member-content">
+                    <h3>Dr. Kael Orion</h3>
+                    <p>
+                        Chief strategist overseeing neural preservation and
+                        future human performance systems.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="membership" class="membership">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Partnership Access
+        </div>
+
+        <div class="membership-panel reveal">
+
+            <h2>
+                Access the Future of Human Longevity
+            </h2>
+
+            <p class="section-subtitle" style="margin:auto;">
+                Patriarch selectively collaborates with visionary institutions,
+                elite researchers, strategic investors, and advanced medical
+                innovators shaping the future of civilization.
+            </p>
+
+            <div class="hero-buttons" style="justify-content:center; margin-top:40px;">
+                <a href="#contact" class="btn btn-primary">
+                    Submit Confidential Inquiry
+                </a>
+
+                <a href="#technology" class="btn btn-secondary">
+                    Explore Technologies
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+
+        <div class="section-tag reveal">
+            Contact & Inquiry
+        </div>
+
+        <h2 class="section-title reveal">
+            Initiate Secure Communication
+        </h2>
+
+        <div class="contact-grid">
+
+            <div class="contact-card reveal">
+                <h3 style="margin-bottom:20px;">
+                    Strategic Inquiry Channel
+                </h3>
+
+                <p style="color:var(--text-muted); margin-bottom:20px;">
+                    Partnership proposals, confidential research collaborations,
+                    and advanced biotechnology initiatives are reviewed through
+                    encrypted institutional channels.
+                </p>
+
+                <div style="margin-top:30px;">
+                    <p style="margin-bottom:10px;">Research Network Status</p>
+
+                    <div style="
+                        height:12px;
+                        background:rgba(255,255,255,.06);
+                        border-radius:999px;
+                        overflow:hidden;
+                    ">
+                        <div style="
+                            width:92%;
+                            height:100%;
+                            background:linear-gradient(to right,var(--cyan),var(--emerald));
+                            box-shadow:0 0 20px rgba(85,231,255,.4);
+                        "></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-card reveal">
+
+                <form>
+                    <input type="text" placeholder="Full Name">
+
+                    <input type="email" placeholder="Institutional Email">
+
+                    <input type="text" placeholder="Organization">
+
+                    <textarea placeholder="Describe your inquiry..."></textarea>
+
+                    <button class="btn btn-primary" type="submit">
+                        Transmit Inquiry
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container footer-grid">
+
+        <div>
+            <h3 style="margin-bottom:10px;">PATRIARCH</h3>
+
+            <p style="color:var(--text-muted);">
+                Engineering the next era of human longevity.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#research">Research</a>
+            <a href="#technology">Technology</a>
+            <a href="#impact">Impact</a>
+            <a href="#leadership">Leadership</a>
+            <a href="#membership">Access</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+    </div>
+
+</footer>
+
+<script>
+/* =========================
+   LOADER
+========================= */
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.querySelector(".loader")
+            .classList.add("hidden");
+    }, 1400);
+});
+
+/* =========================
+   MOBILE NAV
+========================= */
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
+
+/* =========================
+   SCROLL PROGRESS
+========================= */
+const progressBar = document.querySelector(".progress-bar");
+
+window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const docHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const progress = (scrollTop / docHeight) * 100;
+
+    progressBar.style.width = progress + "%";
+});
+
+/* =========================
+   REVEAL ON SCROLL
+========================= */
+const reveals = document.querySelectorAll(".reveal");
+
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("active");
+        }
+    });
+},{
+    threshold:0.15
+});
+
+reveals.forEach(reveal => {
+    revealObserver.observe(reveal);
+});
+
+/* =========================
+   ACTIVE NAV
+========================= */
+const sections = document.querySelectorAll("section");
+const navItems = document.querySelectorAll(".nav-links a");
+
+window.addEventListener("scroll", () => {
+
+    let current = "";
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 160;
+
+        if(pageYOffset >= sectionTop){
+            current = section.getAttribute("id");
+        }
+    });
+
+    navItems.forEach(link => {
+        link.classList.remove("active");
+
+        if(link.getAttribute("href").includes(current)){
+            link.classList.add("active");
+        }
+    });
+});
+
+/* =========================
+   COUNTER ANIMATION
+========================= */
+const counters = document.querySelectorAll("[data-target]");
+
+const counterObserver = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            const counter = entry.target;
+            const target = +counter.dataset.target;
+
+            let count = 0;
+
+            const update = () => {
+
+                const increment = target / 90;
+
+                if(count < target){
+                    count += increment;
+                    counter.innerText = Math.ceil(count);
+                    requestAnimationFrame(update);
+                }else{
+                    counter.innerText = target;
+                }
+            };
+
+            update();
+
+            counterObserver.unobserve(counter);
+        }
+    });
+
+},{
+    threshold:.5
+});
+
+counters.forEach(counter => {
+    counterObserver.observe(counter);
+});
+
+/* =========================
+   PARTICLES
+========================= */
+const particlesContainer = document.getElementById("particles");
+
+for(let i = 0; i < 55; i++){
+
+    const particle = document.createElement("div");
+
+    particle.classList.add("particle");
+
+    particle.style.left = Math.random() * 100 + "vw";
+
+    particle.style.animationDuration =
+        (Math.random() * 10 + 8) + "s";
+
+    particle.style.animationDelay =
+        Math.random() * 8 + "s";
+
+    particle.style.opacity = Math.random();
+
+    particlesContainer.appendChild(particle);
+}
+
+/* =========================
+   FORM INTERACTION
+========================= */
+document.querySelector("form")
+.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    const button = this.querySelector("button");
+
+    button.innerText = "Inquiry Transmitted";
+
+    button.style.transform = "scale(1.02)";
+
+    setTimeout(() => {
+        button.innerText = "Transmit Inquiry";
+    }, 2500);
+});
+</script>
+
+</body>
+</html>
