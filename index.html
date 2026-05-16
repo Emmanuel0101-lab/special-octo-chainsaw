@@ -3,41 +3,66 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<title>Patriarch — The Future of Human Longevity</title>
-
+<title>CurateHub — Social Product Showcase</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* =========================
    ROOT VARIABLES
 ========================= */
-:root{
-    --bg:#050505;
-    --bg-secondary:#0b0d10;
-    --surface:rgba(255,255,255,0.05);
-    --surface-strong:rgba(255,255,255,0.08);
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-tertiary: #1a1a25;
+    
+    --surface: rgba(255, 255, 255, 0.05);
+    --surface-strong: rgba(255, 255, 255, 0.1);
+    --surface-hover: rgba(255, 255, 255, 0.15);
+    
+    --border: rgba(255, 255, 255, 0.1);
+    --border-highlight: rgba(255, 255, 255, 0.2);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-muted: #6a6a7a;
+    
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #ec4899;
+    --accent-tertiary: #06b6d4;
+    --accent-gradient: linear-gradient(135deg, #8b5cf6, #ec4899, #06b6d4);
+    
+    --glow-primary: 0 0 40px rgba(139, 92, 246, 0.3);
+    --glow-secondary: 0 0 30px rgba(236, 72, 153, 0.25);
+    
+    --card-radius: 20px;
+    --btn-radius: 12px;
+    
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --max-width: 1400px;
+}
 
-    --border:rgba(255,255,255,0.12);
-
-    --text:#f5f7fa;
-    --text-muted:#9ea6b2;
-
-    --silver:#d9dde3;
-    --platinum:#f1f2f4;
-    --cyan:#55e7ff;
-    --blue:#5d8cff;
-    --gold:#bfa76a;
-    --emerald:#3fd0a8;
-
-    --glow:0 0 40px rgba(85,231,255,.25);
-
-    --radius:22px;
-
-    --transition:all .45s cubic-bezier(.2,.8,.2,1);
-
-    --max-width:1400px;
+[data-theme="light"] {
+    --bg-primary: #f8f9fc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f0f1f5;
+    
+    --surface: rgba(0, 0, 0, 0.03);
+    --surface-strong: rgba(0, 0, 0, 0.08);
+    --surface-hover: rgba(0, 0, 0, 0.12);
+    
+    --border: rgba(0, 0, 0, 0.08);
+    --border-highlight: rgba(0, 0, 0, 0.15);
+    
+    --text-primary: #1a1a2e;
+    --text-secondary: #5a5a6e;
+    --text-muted: #8a8a9e;
+    
+    --glow-primary: 0 0 40px rgba(139, 92, 246, 0.15);
+    --glow-secondary: 0 0 30px rgba(236, 72, 153, 0.15);
 }
 
 /* =========================
